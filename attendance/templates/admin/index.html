@@ -1,0 +1,21 @@
+{% if not current_user.is_authenticated %}
+<div class="content-section">
+    <h1>You don't have permission to do that (403)</h1>
+    <p>Please check your account and try again</p>
+</div>
+
+{% else %}
+{% extends 'admin/master.html' %}
+{% block body %}
+<section class="content-header">
+    <h3>
+        Welcome!
+    </h3>
+</section>
+<div class="content-section">
+    <p>Here, you can edit, view and export attendance info</p>
+
+</div>
+{% endblock %}
+
+{% endif %}
