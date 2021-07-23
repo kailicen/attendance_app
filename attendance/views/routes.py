@@ -83,7 +83,7 @@ def guest():
         db.session.add(new_guest)
         db.session.commit()
         flash('Your attendance has been recorded!', 'success')
-        return redirect(url_for('views.guest'))
+        return redirect(url_for('views.home'))
     return render_template('guest.html', title='Guest Attendance', form=form)
 
 
@@ -99,7 +99,7 @@ def member():
         db.session.add(new_attendance)
         db.session.commit()
         flash('Your attendance has been recorded!', 'success')
-        return redirect(url_for('views.member'))
+        return redirect(url_for('views.home'))
     return render_template('member.html', title='Member Attendance', form=form)
 
 

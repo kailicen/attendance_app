@@ -5,3 +5,5 @@ Flask_SQLAlchemy
 Flask_WTF
 WTForms
 Flask_Bcrypt
+Flask_Login
+email_validator
