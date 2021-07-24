@@ -8,7 +8,7 @@ class GuestForm(FlaskForm):
     name = StringField('Name', validators=[
                        DataRequired(), Length(min=2, max=30)])
     email = StringField('Email', validators=[DataRequired(), Email()])
-    mobile = StringField('Mobile Phone')
+    mobile = StringField('Mobile Phone', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
     def validate_name(self, name):
@@ -22,6 +22,18 @@ class GuestForm(FlaskForm):
         if user:
             raise ValidationError(
                 'That email is taken. Please choose a different one.')
+
+    def validate_mobile(self, mobile):
+        enter_mobile = mobile.data.replace(" ", "")
+        if enter_mobile.isnumeric() == False:
+            raise ValidationError(
+                'Please enter the right format of mobile number.')
+        format_mobile = enter_mobile[:-6] + " " + \
+            enter_mobile[-6:-3] + " " + enter_mobile[-3:]
+        user = User.query.filter_by(mobile=format_mobile).first()
+        if user:
+            raise ValidationError(
+                'That mobile number is taken. Please choose a different one.')
 
 
 class MemberForm(FlaskForm):

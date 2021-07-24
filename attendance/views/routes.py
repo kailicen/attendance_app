@@ -78,8 +78,11 @@ def home():
 def guest():
     form = GuestForm()
     if form.validate_on_submit():
+        enter_mobile = form.mobile.data.replace(" ", "")
+        format_mobile = enter_mobile[:-6] + " " + \
+            enter_mobile[-6:-3] + " " + enter_mobile[-3:]
         new_guest = User(if_member=False, name=form.name.data.strip().lower().title(),
-                         email=form.email.data.lower(), mobile=form.mobile.data)
+                         email=form.email.data.lower(), mobile=format_mobile)
         db.session.add(new_guest)
         db.session.commit()
         flash('Your attendance has been recorded!', 'success')
