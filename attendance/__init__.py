@@ -42,7 +42,7 @@ def create_admin():
     hashed_password = bcrypt.generate_password_hash(
         'admin').decode('utf-8')
     from attendance.models import User
-    admin = User(if_admin=True, if_member=False, name='Admin', email='hobarttoastmasters6247@gmail.com',
+    admin = User(if_admin=True, if_member=False, if_return_guest=False, name='Admin', email='vppr-6247@toastmastersclubs.org',
                  password=hashed_password)
     db.session.add(admin)
     db.session.commit()
@@ -69,7 +69,7 @@ def init_member():
                "0416 360 067", "0481 338 249", "0438 826 719", "0438 379 976", "0415 556 292", "0404 166 005", "0418 426 586",
                "0452 399 187", "0433 882 833", "0405 997 655", "0452 380 168", "0488 188 846", "0456 764 608", "0404 608 825"]
     for i in range(0, 26):
-        user = User(if_member=True,
+        user = User(if_member=True, if_return_guest=False,
                     name=names[i], email=emails[i], mobile=mobiles[i])
         db.session.add(user)
         db.session.commit()

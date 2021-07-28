@@ -6,10 +6,10 @@
 <form method="POST" action="">
     {{ form.hidden_tag() }}
     <fieldset class="form-group">
-        <label for="member_names">Members</label>
-        <select class="form-control form-control-lg" id="member_names" , name="member_names">
+        <label for="guest_names">Return Guests</label>
+        <select class="form-control form-control-lg" id="guest_names" , name="guest_names">
             <option value="" disabled selected>Choose your name...</option>
-            {% for name in form.member_names %}
+            {% for name in form.guest_names %}
             {{ name }}
             {% endfor %}
         </select>

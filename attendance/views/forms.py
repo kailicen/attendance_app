@@ -42,6 +42,12 @@ class MemberForm(FlaskForm):
     submit = SubmitField('Submit')
 
 
+class ReturnGuestForm(FlaskForm):
+    guest_names = SelectField(
+        'Choose your name...', validators=[DataRequired()],)
+    submit = SubmitField('Submit')
+
+
 class AdminForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])

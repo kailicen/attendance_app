@@ -1,7 +1,17 @@
 {% extends "layout.html" %}
 {% block content %}
 <div class="content-section">
-    <p>Please choose 'Guest' or 'Member' tab to record your attendance!</p>
+    <p>We are recording your attendance to keep track of your growth in Toastmasters.</p>
+    <p>Select your name via the following options, or enter your details if you haven't already.</p>
+    <div class="d-flex flex-column">
+        <a class="btn btn-dark btn-lg btn-block home-button" href="{{ url_for('views.guest') }}">New Guests</a>
 
+        <a class="btn btn-dark btn-lg btn-block home-button" href="{{ url_for('views.return_guest') }}">Return
+            Guests</a>
+
+        <a class="btn btn-dark btn-lg btn-block home-button" href="{{ url_for('views.member') }}">Members</a>
+
+        <p class="home-button">Let's stay accountable together!</p>
+    </div>
 </div>
 {% endblock content %}

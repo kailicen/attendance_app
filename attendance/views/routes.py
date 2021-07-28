@@ -1,4 +1,4 @@
-from attendance.views.forms import GuestForm, MemberForm, AdminForm
+from attendance.views.forms import GuestForm, MemberForm, ReturnGuestForm, AdminForm
 from flask import render_template, url_for, flash, Blueprint, redirect, request
 from attendance import db, admin, bcrypt
 from attendance.models import User, Attendance
@@ -81,7 +81,7 @@ def guest():
         enter_mobile = form.mobile.data.replace(" ", "")
         format_mobile = enter_mobile[:-6] + " " + \
             enter_mobile[-6:-3] + " " + enter_mobile[-3:]
-        new_guest = User(if_member=False, name=form.name.data.strip().lower().title(),
+        new_guest = User(if_member=False, if_return_guest=True, name=form.name.data.strip().lower().title(),
                          email=form.email.data.lower(), mobile=format_mobile)
         db.session.add(new_guest)
         db.session.commit()
@@ -104,6 +104,23 @@ def member():
         flash('Your attendance has been recorded!', 'success')
         return redirect(url_for('views.home'))
     return render_template('member.html', title='Member Attendance', form=form)
+
+
+@views.route('/return_guest', methods=['GET', 'POST'])
+def return_guest():
+    names = User.query.filter_by(if_return_guest=True).all()
+    form = ReturnGuestForm()
+    form.guest_names.choices = [(name, name) for name in names]
+    if form.validate_on_submit():
+        return_guest = User.query.filter_by(
+            name=form.member_names.data).first()
+
+        new_attendance = Attendance(user_id=return_guest.id)
+        db.session.add(new_attendance)
+        db.session.commit()
+        flash('Your attendance has been recorded!', 'success')
+        return redirect(url_for('views.home'))
+    return render_template('return_guest.html', title='Return Guests Attendance', form=form)
 
 
 @views.route('/admin_login', methods=['GET', 'POST'])

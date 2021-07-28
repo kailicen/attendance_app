@@ -1,7 +1,22 @@
 body {
     background: #fafafa;
     color: #333333;
-    margin-top: 5rem;
+    margin-top: 60px;
+  }
+  
+main {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.d-flex {
+  max-width: 800px;
+  margin: 0 auto;
+  align-items: center;
+}
+
+.home-button {
+  margin: 10px;
 }
 
 .p {
@@ -18,22 +33,4 @@ body {
 
 .site-header .navbar-nav .nav-link.active {
   font-weight: 500;
-}
-
-.btn {
-  border: none;
-  background-color: #292b2c;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  display: inline-block;
-}
-
-.success {
-  color: white;
-}
-
-.success:hover {
-  background-color: #414242;
-  color: white;
 }
