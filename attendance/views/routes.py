@@ -31,16 +31,16 @@ class AdminHomeView(sqla.ModelView):
 
 
 class UserView(AdminHomeView):
-    column_editable_list = ('if_admin', 'if_member', 'name', 'email',
+    column_editable_list = ('if_admin', 'if_member', 'if_return_guest', 'name', 'email',
                             'mobile')
     column_searchable_list = column_editable_list
     column_exclude_list = ['password']
     #form_excluded_columns = column_exclude_list
     column_details_exclude_list = column_exclude_list
     column_filters = column_editable_list
-    form_edit_rules = ('if_admin', 'if_member', 'name', 'email',
+    form_edit_rules = ('if_admin', 'if_member', 'if_return_guest', 'name', 'email',
                        'mobile')
-    form_create_rules = ('if_admin', 'if_member', 'name', 'email',
+    form_create_rules = ('if_admin', 'if_member', 'if_return_guest', 'name', 'email',
                          'mobile')
 
     can_export = True
@@ -113,7 +113,7 @@ def return_guest():
     form.guest_names.choices = [(name, name) for name in names]
     if form.validate_on_submit():
         return_guest = User.query.filter_by(
-            name=form.member_names.data).first()
+            name=form.guest_names.data).first()
 
         new_attendance = Attendance(user_id=return_guest.id)
         db.session.add(new_attendance)
