@@ -31,20 +31,20 @@ class AdminHomeView(sqla.ModelView):
 
 
 class UserView(AdminHomeView):
-    column_editable_list = ('if_admin', 'if_member', 'if_return_guest', 'name', 'email',
-                            'mobile')
+    column_type_formatters = DATE_FORMATER
+    column_editable_list = ('if_admin', 'if_member', 'name', 'email',
+                            'mobile', 'date_added', 'if_archive')
     column_searchable_list = column_editable_list
     column_exclude_list = ['password']
     #form_excluded_columns = column_exclude_list
     column_details_exclude_list = column_exclude_list
     column_filters = column_editable_list
-    form_edit_rules = ('if_admin', 'if_member', 'if_return_guest', 'name', 'email',
-                       'mobile')
-    form_create_rules = ('if_admin', 'if_member', 'if_return_guest', 'name', 'email',
-                         'mobile')
+    form_edit_rules = ('if_admin', 'if_member', 'name', 'email',
+                       'mobile', 'date_added', 'if_archive')
+    form_create_rules = ('if_admin', 'if_member', 'name', 'email',
+                         'mobile', 'date_added', 'if_archive')
 
     can_export = True
-    edit_modal = True
     details_modal = True
     can_view_details = True
 
@@ -81,7 +81,7 @@ def guest():
         enter_mobile = form.mobile.data.replace(" ", "")
         format_mobile = enter_mobile[:-6] + " " + \
             enter_mobile[-6:-3] + " " + enter_mobile[-3:]
-        new_guest = User(if_member=False, if_return_guest=True, name=form.name.data.strip().lower().title(),
+        new_guest = User(if_member=False, name=form.name.data.strip().lower().title(),
                          email=form.email.data.lower(), mobile=format_mobile)
         db.session.add(new_guest)
         db.session.commit()
@@ -92,7 +92,7 @@ def guest():
 
 @views.route('/member', methods=['GET', 'POST'])
 def member():
-    names = User.query.filter_by(if_member=True).all()
+    names = User.query.filter_by(if_member=True, if_archive=False).all()
     form = MemberForm()
     form.member_names.choices = [(name, name) for name in names]
     if form.validate_on_submit():
@@ -108,7 +108,8 @@ def member():
 
 @views.route('/return_guest', methods=['GET', 'POST'])
 def return_guest():
-    names = User.query.filter_by(if_return_guest=True).all()
+    names = User.query.filter_by(
+        if_admin=False, if_member=False, if_archive=False).all()
     form = ReturnGuestForm()
     form.guest_names.choices = [(name, name) for name in names]
     if form.validate_on_submit():

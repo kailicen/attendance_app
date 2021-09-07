@@ -13,10 +13,11 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     if_admin = db.Column(db.Boolean, nullable=False, default=False)
     if_member = db.Column(db.Boolean, nullable=False)
-    if_return_guest = db.Column(db.Boolean, nullable=False)
     name = db.Column(db.String(100), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True)
     mobile = db.Column(db.String(20))
+    date_added = db.Column(db.DateTime, default=func.now(), nullable=False)
+    if_archive = db.Column(db.Boolean, nullable=False, default=False)
 
     password = db.Column(db.String(60))
 
